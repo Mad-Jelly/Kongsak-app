@@ -61,6 +61,7 @@ body, html {
                 <br>            
                 <button class="btn btn-lg btn-primary btn-block text-uppercase" name="login" value="Login"  type="submit">Sign in</button>                 
                 </form>
+                <H1>Master Is HERE</H1>
             </div>
             </div>
         </div>
@@ -68,8 +69,8 @@ body, html {
     </div>       
 </div> 
 </body>
-<h1>hi</h1>
 </html>
+
 <?php
 
 if(isset($_POST['login']))
