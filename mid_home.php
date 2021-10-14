@@ -84,6 +84,9 @@ $_SESSION["year"]=date("Y");
 	<li class="nav-item h3" style="padding-left:10px">
       <a class="nav-link" href="./mid_order_home.php">รายละเอียดการสั่งซื้อ</a>
     </li>
+	<li class="nav-item h3" style="padding-left:px">
+      <a class="nav-link" href="./mid_tech_onsite_home.php">Onsite Service</a>
+    </li>
 	
 	<?php
 	if($authen==1)
@@ -98,7 +101,7 @@ $_SESSION["year"]=date("Y");
 	}
 	else
 	{
-	echo '<li class="nav-item h3" style="margin-left:650px">
+	echo '<li class="nav-item h3" style="margin-left:450px">
 		<a class="nav-link" href="./mid_add_service.php">
 		<input type="image" src="./image/plus.png" alt="Submit" width="20" height="20">
 		เพิ่มข้อมูล
