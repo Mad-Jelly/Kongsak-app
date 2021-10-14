@@ -123,7 +123,7 @@ $_SESSION["year"]=date("Y");
 <br />
 		<h1><?=$head?></h1>
 		<br>
-		<h1>MASTER IS HERE</h1>
+		<h1>MASTER GIT IS HERE</h1>
 <br />		
 <table id="myTable" class="display" style="width: 100%;">
         <thead>
