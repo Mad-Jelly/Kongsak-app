@@ -1,0 +1,13 @@
+git add <ชื่อไฟล์ที่เตรียมตัวจะเก็บ> หรือ . เพื่อเก็บทั้งหมด
+git commit -m "รายละเอียดก่อนเก็บ"
+
+git push origin master ส่งข้อมูลไป Master บน Github
+git pull origin master "ดึงข้อมูลจาก Master บน  Github"
+
+git push origin <ชื่อกิ่ง>  ส่งข้อมูลกิ่งไปยัง remote ที่ชื่อOrigin
+git pull origin <ชื่อกิ่ง>  ดึงข้อมูลกิ่งจาก remote ที่ชื่อOrigin
+
+
+git branch เช็คว่าอยู่ที่กิ่งไหน
+git Checkout <ชื่อกิ่ง> ย้ายไปทำงานงานที่กิ่งนั้น
+git checkout <branch name> <file name> เลือกแค่บางไฟล์จาก Branch อื่น เข้ามา Merge กับ Working Directory ที่กำลังทำงาน
