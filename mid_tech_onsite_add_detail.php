@@ -75,20 +75,27 @@ $all_user=mysqli_query($con,"SELECT * FROM tbl_mid_technician");
 
     <div class="row bg-main pl-5 pr-5 ">
         <div class="col-lg h1 pt-5">
-            ลงทะเบียนใบสั่งซื้อสินค้า
+            รายละเอียดการเข้าหน้างาน
         </div>
         <div class="form-row pt-3 " align="left">
             <div class="form-group col-md-6 input-group-lg">
-                <label class="h5">เลขที่ OD</label>
-                <input class="form-control log_add_fontsize" name="txt_odnum" placeholder="*เลขที่ OD"/>           
+                <label class="h5">เลขที่ใบงาน</label>
+                <input class="form-control log_add_fontsize" name="txt_job_id" placeholder="*เลขที่ใบงาน"/>           
             </div>            
             <div class="form-group col-md-6 input-group-lg">
-                <label class="h5">เลขที่ PO</label>
-                <input class="form-control log_add_fontsize" name="txt_ponum" placeholder="*เลขที่ PO"/>           
-            </div>              
+            <label class="h5">ช่างดำเนินงาน</label>
+            <select class="custom-select h-auto log_add_fontsize"  name="txt_buyer_province">	
+                <option value="">*เลือกช่างดำเนินงาน</option>
+            <?php
+                while($tech = mysqli_fetch_array($all_user))
+            {		
+                    echo '<option value="'.$tech["tech_id"].'">'.$tech["tech_name"].'</option>';      		
+            }?>	
+                </select>  
+            </div>             
             <div class="form-group col-md-8 input-group-lg">
-                <label class="h5">ผู้ซื้อ</label>
-                <input class="form-control log_add_fontsize" name="txt_buyer"  placeholder="ผู้ซื้อ">     
+                <label class="h5">สถานที่</label>
+                <input class="form-control log_add_fontsize" name="txt_buyer"  placeholder="สถานที่">     
             </div>  
             <div class="form-group col-md-4 input-group-lg">
             <label class="h5">จังหวัด</label>
@@ -101,21 +108,8 @@ $all_user=mysqli_query($con,"SELECT * FROM tbl_mid_technician");
             }?>	
                 </select>  
             </div>
-            <div class="form-group col-md-8 input-group-lg">
-                <label class="h5">สถานที่ติดตั้ง</label>
-                <input class="form-control log_add_fontsize" name="txt_location"  placeholder="สถานที่ติดตั้ง">     
-            </div>  
-            <div class="form-group col-md-4 input-group-lg">
-            <label class="h5">จังหวัด</label>
-            <select class="custom-select h-auto log_add_fontsize"  name="txt_location_province">	
-                <option value="">*เลือกจังหวัด</option>
-            <?php
-                while($province1 = mysqli_fetch_array($all_provi1))
-            {		
-                    echo '<option value="'.$province1["province_id"].'">'.$province1["province_name"].'</option>';      		
-            }?>	
-                </select>  
-            </div>
+             
+            
             <div class="form-group col-md-4 input-group-lg">
                 <label class="h5">ผู้ติดต่อ</label>
                 <input class="form-control log_add_fontsize" name="txt_contact" placeholder="ผู้ติดต่อ"/>           
@@ -129,9 +123,8 @@ $all_user=mysqli_query($con,"SELECT * FROM tbl_mid_technician");
                 <input class="form-control log_add_fontsize" name="txt_email" placeholder="E-mail"/>           
             </div>  
             <div class="form-group col-md-12 input-group-lg">
-                <label class="h5">รายละเอียดสินค้าสินค้า</label>
-                <input class="form-control log_add_fontsize" name="txt_goods_detail" placeholder="รายละเอียดสินค้าสินค้า"/> 
-                <label class="h5">Ex: เครื่อง MD1100 + KXD43CA+ เตียง 4 Ways + Floor 2 Ceiling</label>        
+                <label class="h5">รายละเอียดการดำเนินงาน</label>
+                <input class="form-control log_add_fontsize" name="txt_goods_detail" placeholder="รายละเอียดการดำเนินงาน"/>              
             </div>                   
         </div>         
         <div class="form-group col-md-12  pt-3 pb-5" style="margin: 0 auto">
