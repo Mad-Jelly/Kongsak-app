@@ -109,7 +109,7 @@ elseif(isset($_POST['2021']))
                     </div>
                 </li>
               </ul>
-                 <a class="nav-link" href="./mid_order_add_process.php"style="color:blue">
+                 <a class="nav-link" href="./mid_tech_onsite_add_detail.php"style="color:blue">
                   <input type="image" src="./image/plus.png" alt="Submit" width="20" height="20">
                   เพิ่มข้อมูล
                   </a>  

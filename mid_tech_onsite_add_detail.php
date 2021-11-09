@@ -61,7 +61,7 @@ $all_user=mysqli_query($con,"SELECT * FROM tbl_mid_technician");
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav ml-auto nav">      
-                <a class="nav-item nav-link" href="./mid_order_home.php" style="color:blue"><input type="image" src="./image/back.png" alt="Submit" width="20" height="20"> ย้อนกลับ</a>      
+                <a class="nav-item nav-link" href="./mid_tech_onsite_home.php" style="color:blue"><input type="image" src="./image/back.png" alt="Submit" width="20" height="20"> ย้อนกลับ</a>      
                 <a class="nav-item nav-link" style="color:blue" href="#" OnClick="out()">ออกจากระบบ
                     <input class="mt-1" type="image" src="./image/logout.png" alt="Submit" width="18" height="20">
                 </a> 
