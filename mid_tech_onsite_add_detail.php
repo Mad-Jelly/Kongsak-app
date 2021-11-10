@@ -66,6 +66,7 @@ $all_user=mysqli_query($con,"SELECT * FROM tbl_mid_technician");
                     <input class="mt-1" type="image" src="./image/logout.png" alt="Submit" width="18" height="20">
                 </a> 
                 </div>
+                
             </div>
         </nav>
     </div>
