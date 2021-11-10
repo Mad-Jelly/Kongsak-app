@@ -1,4 +1,5 @@
 <?php
+ 
 ob_start();
 session_start();
 $id=$_SESSION["id"];
@@ -7,10 +8,16 @@ $authen=$_SESSION["authen"];
 $year=$_SESSION["year"];
 include("connect_table.php");
 
+$all_tech=mysqli_query($con,"SELECT * FROM tbl_mid_tech_onsite_tech");
+$all_province=mysqli_query($con,"SELECT * FROM tbl_mid_province");
+$job_type=mysqli_query($con,"SELECT * FROM tbl_mid_tech_onsite_job_type");
+
 if($_SESSION["year"]==2020)
 {
   $result=mysqli_query($con,"SELECT * FROM view_mid_order_full_process  WHERE end_date IS NOT NULL   ORDER BY open_date");
   $header='รายละเอียดการดำเนินการปี 2563';
+
+  
 }
 else
 {
@@ -42,6 +49,7 @@ elseif(isset($_POST['2021']))
 <title>หน้าหลัก</title>
 <link rel="shortcut icon" type="image/x-icon" href="image/icon.ico">
 <link href="mid-ins-css.css" rel="stylesheet" type="text/css" /> 
+<link href="mid-css.css" rel="stylesheet" type="text/css" /> 
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" /> 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -74,13 +82,14 @@ elseif(isset($_POST['2021']))
 
 <body>
     <?php			
-    echo "<form id=\"form1\" class=\"form-inline\"  method=\"post\" >";
+    echo "<form id=\"form1\" class=\"\"  method=\"post\" >";
+    
     ?>
 <div class="container-fluid" style="width:1400px">
     <div class="row  pt-5 pl-2 pb-2 bg ">
         <img src="./image/mid.png"  /> 
     </div>
-    <div class="row  pt-3 pb-2" style="background-color: #e3f2fd;">        
+    <div class="row  pt-3 pb-2"  style="background-color: #e3f2fd;">        
         <div class="col-lg h4" >
           <nav class="navbar navbar-expand-lg navbar-light bg-light">
             
@@ -109,19 +118,89 @@ elseif(isset($_POST['2021']))
                     </div>
                 </li>
               </ul>
-                 <a class="nav-link" href="./mid_tech_onsite_add_detail.php"style="color:blue">
-                  <input type="image" src="./image/plus.png" alt="Submit" width="20" height="20">
+              
+               <!--Start link trigger modal -->
+              <a href="" class="nav-item nav-link " style="color:blue" data-toggle="modal" data-target="#exampleModal">
+                <input class="mt-1" type="image" src="./image/plus.png"  width="18" height="20">
                   เพิ่มข้อมูล
                   </a>  
+                 <!-- End link trigger modal -->  
                   <a class="nav-link" href="#" OnClick="out()" style="color:blue">ออกจากระบบ
 		              <input type="image" src="./image/logout.png" alt="Submit" width="18" height="20"></a> 
                 
-              
-                
-              
+              <!--Start Modal-->
+                  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog " role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="exampleModalLabel">เพิ่มข้อมูลการทำงาน</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">   
+                                          
+                            <div class="form-group col-md-12 input-group-lg">
+                                <label class="h5">*เลขที่ใบงาน</label>
+                                <input class="form-control log_add_fontsize"  name="txt_job_id" />         
+                            </div> 
+                            <div class="form-group col-md-12 input-group-lg ">
+                                <label class="h5">*ประเภทของใบงาน</label>
+                                <select class="custom-select h-auto log_add_fontsize"  name="txt_job_type"> 	
+                                    <option value="00">เลือกประเภทใบงาน</option>
+                                <?php
+                                    while($job = mysqli_fetch_array($job_type))
+                                {		
+                                        echo '<option value="'.$job["job_type_id"].'">'.$job["job_type_name"].'</option>';    		
+                                }?>
+                                    </select>  
+                            </div>  
+                            <div class="form-group col-md-12 input-group-lg ">
+                                <label class="h5">*ช่าง</label>
+                                <select class="custom-select h-auto log_add_fontsize"  name="txt_tech"> 	
+                                    <option value="00">*เลือกช่าง</option>
+                                <?php
+                                    while($mo_tech = mysqli_fetch_array($all_tech))
+                                {		
+                                        echo '<option value="'.$mo_tech["tech_id"].'">'.$mo_tech["tech_name"].'</option>';    		
+                                }?>
+                                    </select>  
+                            </div> 
+                            <div class="form-group col-md-12 input-group-lg">
+                                <label class="h5">*สถานที่</label>
+                                <input class="form-control log_add_fontsize"  name="txt_location" />         
+                            </div> 
+                            <div class="form-group col-md-12 input-group-lg ">
+                                <label class="h5">*จังหวัด</label>
+                                <select class="custom-select h-auto log_add_fontsize"  name="txt_province"> 	
+                                    <option value="00">*เลือกจังหวัด</option>
+                                <?php
+                                    while($provi = mysqli_fetch_array($all_province))
+                                {		
+                                        echo '<option value="'.$provi["province_id"].'">'.$provi["province_name"].'</option>';    		
+                                }?>
+                                    </select>  
+                            </div>                                                       
+                            <div class="form-group col-md-12 input-group-lg">
+                                <label class="h5">*วันที่ออกหน้างาน</label>
+                                <input type="date" class="form-control  log_add_fontsize" name="txt_onsite_date" />        
+                            </div>                             
+                            <div class="form-group col-md-12 input-group-lg">
+                                <label class="h5">รายละเอียดงาน</label>                                
+                                <textarea class="form-control" id="area" rows="3" style="height:100%;" name="txt_job_detail"></textarea>             
+                            </div>                            
+                        </div>
+                        <div class="modal-body">                           
+                            <button type="submit"  name="btn_modal"  class="btn-lg btn-primary">บันทึกข้อมูล</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+              <!--End  Modal-->
             </div>
           </nav>
         </div>
+        
         
         
     
@@ -236,7 +315,7 @@ elseif(isset($_POST['2021']))
                               </tr>
                             <?php
                             }	                    
-                            mysqli_close($con);	
+                           // mysqli_close($con);	
                             
                         }
                           
@@ -249,13 +328,121 @@ elseif(isset($_POST['2021']))
                 
         
 </div>
+<?php
+      
+        if(isset($_POST['btn_modal']))
+        {
+          if($authen==NULL)
+          {		
+            header("location: index.php");	
+          }
 
+          $job_id=$_POST['txt_job_id'];
+          $job_type=$_POST['txt_job_type'];
+          $tech=$_POST['txt_tech'];
+          $location=$_POST['txt_location'];
+          $province=$_POST['txt_province'];
+          $onsite_date=$_POST['txt_onsite_date'];
+          $service_detail=$_POST['txt_job_detail']; 
+          if($job_id!="" & $job_type!="" &$tech!="" & $province!="" & $onsite_date!="")
+          {          
+            $chk_job_sub_id=mysqli_query($con,"SELECT job_sub_id FROM tbl_mid_tech_onsite WHERE job_id='".$job_id."'");
+            while($chk_job = mysqli_fetch_array($chk_job_sub_id))
+            {
+              $job_sub_id = $chk_job['job_sub_id'];
+              
+            }
+            echo $job_sub_id;
+            if(empty($job_sub_id))
+            {
+              $job_sub_id=1;                    
+            }           
+            else
+            {
+              $job_sub_id=$job_sub_id+1;
+              
+            } 
+            
+           /* $chk_job_sub_id=mysqli_query($con,"SELECT job_sub_id FROM tbl_mid_tech_onsite WHERE job_id='".$job_id."'");
+            if(mysqli_num_rows($chk_job_sub_id))
+            {	
+              $job_sub_id=1;
+                    /* echo '<script type="text/javascript">
+                      swal("", "หมายเลข OD นี้ถูกลงทะเบียนแล้วครับ !!", "error");
+                      </script>';
+                      mysqli_close($con);	                     						 
+            }
+            else
+            {
+                $job_sub_id=$chk_job_sub_id["job_sub_id"]+1;
+            } */
+            $insert_job="INSERT INTO tbl_mid_tech_onsite
+            (
+              job_id,
+              job_sub_id,
+              location,
+              province_id,
+              tech_id,
+              service_detail,
+              onsite_date,
+              open_person,
+              open_date
 
+            )
+            VALUES('".$job_id."','".$job_sub_id."','".$location."','".$province."','".$tech."',
+                  '".$service_detail."','".$onsite_date."','".$id."',NOW())";
 
+              $objQuery = mysqli_query($con,$insert_job);	               
+              if($objQuery)
+              {                                                           		                                             
+                  echo '<script type="text/javascript">
+                  swal
+                  ({
+                      title: "บันทึกข้อมูลเรียบร้อยแล้วครับ?",                        
+                      icon: "success",
+                      successMode: true,
+                  })
+                  .then(willDelete => {
+                      if (willDelete) {
+                          location = location;
+                          close();
+                      }
+                  })
+                  </script>';
+                          echo "<script>
+                          </script>"; 
+                          mysqli_close($con);  
+              }
+              elseif (!$objQuery) 
+              {
+                  echo
+                  '<script type="text/javascript">
+                  swal("", "เกิดข้อผิดพลาด !!", "error");
+                  </script>';	
+                  $message  = 'Invalid query: ' . mysqli_error() . "\n";
+                  $message .= 'Whole query: ' . $update;
+                  die($message);
+              }
+              else
+              {	    
+                  echo   
+                  '<script type="text/javascript">
+                  swal("", "เกิดข้อผิดพลาด !!", "error");
+                  </script>';		
+              }
+                                  
+          }
+          else
+          {
+            echo   
+                  '<script type="text/javascript">
+                  swal("", "กรุณากรอกข้อมูลให้ครบถ้วนด้วยครับ!!", "error");
+                  </script>';		
+          }
+        }
 
-
-  
-
+          
+?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </body>

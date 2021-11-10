@@ -109,20 +109,7 @@ $all_user=mysqli_query($con,"SELECT * FROM tbl_mid_technician");
             }?>	
                 </select>  
             </div>
-             
-            
-            <div class="form-group col-md-4 input-group-lg">
-                <label class="h5">ผู้ติดต่อ</label>
-                <input class="form-control log_add_fontsize" name="txt_contact" placeholder="ผู้ติดต่อ"/>           
-            </div>          
-            <div class="form-group col-md-4 input-group-lg">
-                <label class="h5">หมายเลขโทรศัพท์</label>
-                <input class="form-control log_add_fontsize" name="txt_phone" placeholder="หมายเลขโทรศัพท์"/>           
-            </div>   
-            <div class="form-group col-md-4 input-group-lg">
-                <label class="h5">E-mail</label>
-                <input class="form-control log_add_fontsize" name="txt_email" placeholder="E-mail"/>           
-            </div>  
+                        
             <div class="form-group col-md-12 input-group-lg">
                 <label class="h5">รายละเอียดการดำเนินงาน</label>
                 <input class="form-control log_add_fontsize" name="txt_goods_detail" placeholder="รายละเอียดการดำเนินงาน"/>              
@@ -143,10 +130,7 @@ $all_user=mysqli_query($con,"SELECT * FROM tbl_mid_technician");
     $buyer2=$_POST['txt_buyer_province'];
     $b_location=$_POST['txt_location'];
     $b_location2=$_POST['txt_location_province'];
-    $contact=$_POST['txt_contact'];
-    $phone=$_POST['txt_phone'];
-    $mail=$_POST['txt_email'];
-    $goods=$_POST['txt_goods_detail'];
+    
     
         if(isset($_POST['bt_add']))
         {
