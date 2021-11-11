@@ -9,15 +9,14 @@ $year=$_SESSION["year"];
 include("connect_table.php");
 
 $all_tech=mysqli_query($con,"SELECT * FROM tbl_mid_tech_onsite_tech");
+$all_tech_search=mysqli_query($con,"SELECT * FROM tbl_mid_tech_onsite_tech");
 $all_province=mysqli_query($con,"SELECT * FROM tbl_mid_province");
 $job_type=mysqli_query($con,"SELECT * FROM tbl_mid_tech_onsite_job_type");
 
 if($_SESSION["year"]==2020)
 {
   $result=mysqli_query($con,"SELECT * FROM view_mid_order_full_process  WHERE end_date IS NOT NULL   ORDER BY open_date");
-  $header='รายละเอียดการดำเนินการปี 2563';
-
-  
+  $header='รายละเอียดการดำเนินการปี 2563';  
 }
 else
 {
@@ -100,13 +99,7 @@ elseif(isset($_POST['2021']))
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav mr-auto">
               
-                <!--<li class="nav-item active pt-2">
-                <input class="form-control mr-sm-2" type="search" name="txt_search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" name="btn_search" type="submit">Search</button>
-                </li>-->
-                <!--<li class="nav-item">
-                  <a class="nav-link" href="#"style="color:blue">แสดงทั้งหมด <span class="sr-only">(current)</span></a>
-                </li>-->
+                
                 <li class="nav-item">
                   <a class="nav-link" href="./mid_home.php"style="color:blue">รายการเข้าซ่อมทั้งหมด</a>
                 </li>   
@@ -125,10 +118,12 @@ elseif(isset($_POST['2021']))
                   เพิ่มข้อมูล
                   </a>  
                  <!-- End link trigger modal -->  
-                  <a class="nav-link" href="#" OnClick="out()" style="color:blue">ออกจากระบบ
-		              <input type="image" src="./image/logout.png" alt="Submit" width="18" height="20"></a> 
+                 <a href="" class="nav-item nav-link " style="color:blue" data-toggle="modal" data-target="#searchModal">
+                <input class="mt-1" type="image" src="./image/plus.png"  width="18" height="20">
+                  ค้นหาแบบละเอียด
+                  </a>  
                 
-              <!--Start Modal-->
+              <!--เริ่มการทำงาน Modal เพิ่มข้อมูล -->
                   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog " role="document">
                         <div class="modal-content">
@@ -190,13 +185,54 @@ elseif(isset($_POST['2021']))
                                 <textarea class="form-control" id="area" rows="3" style="height:100%;" name="txt_job_detail"></textarea>             
                             </div>                            
                         </div>
-                        <div class="modal-body">                           
+                        <div class="modal-footer">                           
                             <button type="submit"  name="btn_modal"  class="btn-lg btn-primary">บันทึกข้อมูล</button>
                         </div>
                         </div>
                     </div>
                 </div>
-              <!--End  Modal-->
+              <!--จบการทำงาน Modal เพิ่มข้อมูล -->
+
+              <!--เริ่มการทำงาน Search Modal-->
+              <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog " role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="exampleModalLabel">ค้นหาข้อมูลช่าง</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">                                                                                                  
+                            <div class="form-group col-md-12 input-group-lg ">
+                                <label class="h5">*ช่าง</label>
+                                <select class="custom-select h-auto log_add_fontsize"  name="txt_search_tech"> 	
+                                    <option value="00">*เลือกช่าง</option>
+                                <?php
+                                    while($search_tech = mysqli_fetch_array($all_tech_search))
+                                {		
+                                        echo '<option value="'.$search_tech["tech_id"].'">'.$search_tech["tech_name"].'</option>';    		
+                                }?>
+                                    </select>  
+                            </div>                                                                                
+                            <div class="form-group col-md-12 input-group-lg">
+                                <label class="h5">*เริ่มตั้งแต่วันที่</label>
+                                <input type="date" class="form-control  log_add_fontsize" name="txt_search_onsite_date_start" />        
+                            </div>                             
+                            <div class="form-group col-md-12 input-group-lg">
+                                <label class="h5">*จนถึงวันที่</label>
+                                <input type="date" class="form-control  log_add_fontsize" name="txt_search_onsite_date_end" />        
+                            </div>                            
+                        </div>
+                        <div class="modal-footer">                           
+                            <button type="submit"  name="btn_modal_search_tech"  class="btn-lg btn-danger">ค้นหา</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <!--จบการทำงาน Search Modal-->
+
+              
             </div>
           </nav>
         </div>
@@ -362,20 +398,7 @@ elseif(isset($_POST['2021']))
               $job_sub_id=$job_sub_id+1;
               
             } 
-            
-           /* $chk_job_sub_id=mysqli_query($con,"SELECT job_sub_id FROM tbl_mid_tech_onsite WHERE job_id='".$job_id."'");
-            if(mysqli_num_rows($chk_job_sub_id))
-            {	
-              $job_sub_id=1;
-                    /* echo '<script type="text/javascript">
-                      swal("", "หมายเลข OD นี้ถูกลงทะเบียนแล้วครับ !!", "error");
-                      </script>';
-                      mysqli_close($con);	                     						 
-            }
-            else
-            {
-                $job_sub_id=$chk_job_sub_id["job_sub_id"]+1;
-            } */
+                      
             $insert_job="INSERT INTO tbl_mid_tech_onsite
             (
               job_id,
