@@ -13,32 +13,36 @@ $all_tech_search=mysqli_query($con,"SELECT * FROM tbl_mid_tech_onsite_tech");
 $all_province=mysqli_query($con,"SELECT * FROM tbl_mid_province");
 $job_type=mysqli_query($con,"SELECT * FROM tbl_mid_tech_onsite_job_type");
 
-if($_SESSION["year"]==2020)
+
+$result=mysqli_query($con,"SELECT * FROM view_mid_tech_onsite_full_detail  WHERE onsite_date = CURDATE() ORDER BY open_date");
+$header='รายละเอียดการออกหน้างานของช่าง';  
+
+/*if($_SESSION["year"]==2021)
 {
-  $result=mysqli_query($con,"SELECT * FROM view_mid_order_full_process  WHERE end_date IS NOT NULL   ORDER BY open_date");
-  $header='รายละเอียดการดำเนินการปี 2563';  
+  $result=mysqli_query($con,"SELECT * FROM view_mid_tech_onsite_full_detail  WHERE onsite_date = CURDATE() ORDER BY open_date");
+  $header='รายละเอียดช่างปี 2564';  
 }
 else
 {
   $result=mysqli_query($con,"SELECT * FROM view_mid_order_full_process  WHERE end_date IS NULL OR open_date like'%2021%'  ORDER BY open_date");
-  $header='รายละเอียดการดำเนินการปี 2564';
-  $_SESSION["year"]=2021;
+  $header='รายละเอียดช่างปี 2565';
+  $_SESSION["year"]=2022;
 }
 
 
-if(isset($_POST['2020']))
+if(isset($_POST['2021']))
 {	
   $result=mysqli_query($con,"SELECT * FROM view_mid_order_full_process  WHERE end_date IS NOT NULL   ORDER BY open_date");
-  $header='รายละเอียดการดำเนินการปี 2563';
-  $_SESSION["year"]=2020;
+  $header='รายละเอียดช่างปี 2563';
+  $_SESSION["year"]=2021;
 
 }
-elseif(isset($_POST['2021']))
+elseif(isset($_POST['2025']))
 {	
   $result=mysqli_query($con,"SELECT * FROM view_mid_order_full_process  WHERE end_date IS NULL OR open_date like'%2021%'  ORDER BY open_date");
-  $header='รายละเอียดการดำเนินการปี 2564';
-  $_SESSION["year"]=2021;
-}
+  $header='รายละเอียดช่างปี 2565';
+  $_SESSION["year"]=2025;
+}*/
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -103,26 +107,30 @@ elseif(isset($_POST['2021']))
                 <li class="nav-item">
                   <a class="nav-link" href="./mid_home.php"style="color:blue">รายการเข้าซ่อมทั้งหมด</a>
                 </li>   
-                <li class="nav-item dropdown" style="padding-left:20px">
+                <!--<li class="nav-item dropdown" style="padding-left:20px">
                   <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" style="color:blue;" role="button" aria-haspopup="true" aria-expanded="false">แสดงผลตามปี</a>
                     <div class="dropdown-menu">
                       <input type="submit" class="dropdown-item"  name="2020"  value=" ปี2563"   />    
                       <input type="submit" class="dropdown-item"   name="2021"  value=" ปี2564"  />                      
                     </div>
-                </li>
+                </li>-->
               </ul>
               
-               <!--Start link trigger modal -->
+               <!--Code เริ่มปุ่มเรียกการทำงาน Modal เพิ่มข้อมูล -->
               <a href="" class="nav-item nav-link " style="color:blue" data-toggle="modal" data-target="#exampleModal">
                 <input class="mt-1" type="image" src="./image/plus.png"  width="18" height="20">
                   เพิ่มข้อมูล
                   </a>  
-                 <!-- End link trigger modal -->  
+                 <!--จบ Code  ปุ่มเรียกการทำงาน Modal เพิ่มข้อมูล --> 
+
+                 <!--Code เริ่มปุ่มเรียกการทำงาน Modal ค้นหา --> 
                  <a href="" class="nav-item nav-link " style="color:blue" data-toggle="modal" data-target="#searchModal">
                 <input class="mt-1" type="image" src="./image/plus.png"  width="18" height="20">
                   ค้นหาแบบละเอียด
                   </a>  
+                <!--จบ Code เริ่มปุ่มเรียกการทำงาน Modal ค้นหา -->
                 
+
               <!--เริ่มการทำงาน Modal เพิ่มข้อมูล -->
                   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog " role="document">
@@ -207,7 +215,8 @@ elseif(isset($_POST['2021']))
                             <div class="form-group col-md-12 input-group-lg ">
                                 <label class="h5">*ช่าง</label>
                                 <select class="custom-select h-auto log_add_fontsize"  name="txt_search_tech"> 	
-                                    <option value="00">*เลือกช่าง</option>
+                                    <option value="">*เลือกช่าง</option>
+                                    <option value="99">เลือกช่างทุกคน</option>
                                 <?php
                                     while($search_tech = mysqli_fetch_array($all_tech_search))
                                 {		
@@ -230,7 +239,7 @@ elseif(isset($_POST['2021']))
                         </div>
                     </div>
                 </div>
-                <!--จบการทำงาน Search Modal-->
+              <!--จบการทำงาน Search Modal-->
 
               
             </div>
@@ -275,26 +284,45 @@ elseif(isset($_POST['2021']))
                     <thead>
                         <tr class="table-primary">
                         <th style="width:20px" scope="col">ลำดับ</th>
+                        <th style="width:100px" scope="col">วันที่</th>
+                        <th style="width:100px" scope="col">ช่าง</th>
                         <th style="width:400px"scope="col">ชื่อสถานที่</th>
                         <th style="width:20px" scope="col">จังหวัด</th>
-                        <th style="width:300px" scope="col">สินค้า</th>
-                        <th style="width:200px" scope="col">สถานะ</th>
+                        <th style="width:100px" scope="col">เลขที่ใบงาน</th>
+                        <th style="width:100px" scope="col">ประเภทใบงาน</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $runno=0;
-                        if(isset($_POST['btn_search']))
+                        if(isset($_POST['btn_modal_search_tech']))
                         {
-                            $sear = $_POST['txt_search'];
-                            $search=mysqli_query($con,"SELECT * FROM view_mid_order_full_process WHERE location like '%$sear%'   ORDER BY open_date");
+                          
+                          $onsite_date_start=$_POST['txt_search_onsite_date_start'];
+                          $onsite_date_end=$_POST['txt_search_onsite_date_end'];
+                          $tech=$_POST['txt_search_tech'];
+                          if($tech!="" & $onsite_date_start!="" & $onsite_date_end!="")
+                          {
+                            if($tech=="99")
+                            {
+                              $search=mysqli_query($con,"SELECT * FROM view_mid_tech_onsite_full_detail  WHERE onsite_date between '$onsite_date_start'  AND '$onsite_date_end' ORDER BY open_date");
+
+                            }
+                            else 
+                            {
+                              $search=mysqli_query($con,"SELECT * FROM view_mid_tech_onsite_full_detail  WHERE tech_id = '$tech' AND onsite_date between '$onsite_date_start'  AND '$onsite_date_end' ORDER BY open_date");
+                            }
+                              /*echo $tech;
+                              echo $onsite_date_start;
+                              echo $onsite_date_end;*/
+
                             if(mysqli_num_rows($search)==0)
                             {
                               echo '<script type="text/javascript">
                               swal("", "ไม่พบข้อมูลที่ค้นหาครับ!!", "error");
                               </script>';	
                               mysqli_close($con);	
-                              echo $sear;
+                              
                             }
                             else
                             {
@@ -311,20 +339,33 @@ elseif(isset($_POST['2021']))
                                 {
                                   $stat="";
                                 }
-                            ?>
-                            <tr style="font-size:18px;background-color:<?=$stat?>">
-                            <td><?=$runno?> </td>                                                
-                            <td class="table_in_reserv"><a style="text-decoration:underline" href="./mid_order_detail.php?od_num=<?=$sea["od_num"]?>"><?=$sea["location"]?></a></td>   
-                            <td><?=$sea["location_province"]?></td>
-                            <td><?=$sea["goods_detail"]?></td>  
-                            <td><?=$sea["order_status"]?></td>  
-                            </tr>
-                            <?php
-                            }	                    
-                            mysqli_close($con);	
-                            
-                          }
 
+                                $date_onsite= DateTime::createFromFormat('Y-m-d', $sea["onsite_date"])->format('d/m/Y');                                                             
+                              
+                        ?>
+                       
+                              <tr style="font-size:18px;background-color:<?=$stat?>">
+                              <td><?=$runno?></td>     
+                              <td><?=$date_onsite?></td>                        
+                              <td><?=$sea["tech_name"]?></a></td>   
+                              <td><?=$sea["location"]?></td>
+                              <td><?=$sea["province_name"]?></td>  
+                              <td><?=$sea["job_id"]?></td>  
+                              <td><?=$sea["job_type_name"]?></td> 
+                              </tr>
+                        <?php
+                              }	                    
+                              mysqli_close($con);	                          
+                           }
+                         }
+                         else 
+                         {
+                          echo '<script type="text/javascript">
+                          swal("", "กรุณากรอกข้อมูลค้นหาให้ถูกต้องด้วยครับ!!", "warning");
+                          </script>';	
+                          mysqli_close($con);	
+                         }
+                            
                         }
                         else
                         {
@@ -341,13 +382,16 @@ elseif(isset($_POST['2021']))
                                 {
                                   $stat="";
                                 }
+                                $date_onsite= DateTime::createFromFormat('Y-m-d', $sea["onsite_date"])->format('d/m/Y'); 
                             ?>
                               <tr style="font-size:18px;background-color:<?=$stat?>;height:70px;">
-                              <td><?=$runno?> </td>                                                
-                              <td class="table_in_reserv"><a style="text-decoration:underline" href="./mid_order_detail.php?od_num=<?=$sea["od_num"]?>&year=<?=$sea["od_num"]?>"><?=$sea["location"]?></a></td>   
-                              <td><?=$sea["location_province"]?></td>
-                              <td><?=$sea["goods_detail"]?></td>  
-                              <td><?=$sea["order_status"]?></td>  
+                              <td><?=$runno?> </td>          
+                              <td><?=$date_onsite?></td>                                          
+                              <td><?=$sea["tech_name"]?></a></td>   
+                              <td><?=$sea["location"]?></td>
+                              <td><?=$sea["province_name"]?></td>  
+                              <td><?=$sea["job_id"]?></td>  
+                              <td><?=$sea["job_type_name"]?></td>  
                               </tr>
                             <?php
                             }	                    
@@ -403,6 +447,7 @@ elseif(isset($_POST['2021']))
             (
               job_id,
               job_sub_id,
+              job_type_id,
               location,
               province_id,
               tech_id,
@@ -412,7 +457,7 @@ elseif(isset($_POST['2021']))
               open_date
 
             )
-            VALUES('".$job_id."','".$job_sub_id."','".$location."','".$province."','".$tech."',
+            VALUES('".$job_id."','".$job_sub_id."','".$job_type."','".$location."','".$province."','".$tech."',
                   '".$service_detail."','".$onsite_date."','".$id."',NOW())";
 
               $objQuery = mysqli_query($con,$insert_job);	               
