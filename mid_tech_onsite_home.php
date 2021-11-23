@@ -117,15 +117,15 @@ elseif(isset($_POST['2025']))
               </ul>
               
                <!--Code เริ่มปุ่มเรียกการทำงาน Modal เพิ่มข้อมูล -->
-              <a href="" class="nav-item nav-link " style="color:blue" data-toggle="modal" data-target="#exampleModal">
+                <a href="" class="nav-item nav-link " style="color:blue" data-toggle="modal" data-target="#exampleModal">
                 <input class="mt-1" type="image" src="./image/plus.png"  width="18" height="20">
                   เพิ่มข้อมูล
                   </a>  
-                 <!--จบ Code  ปุ่มเรียกการทำงาน Modal เพิ่มข้อมูล --> 
+               <!--จบ Code  ปุ่มเรียกการทำงาน Modal เพิ่มข้อมูล --> 
 
                  <!--Code เริ่มปุ่มเรียกการทำงาน Modal ค้นหา --> 
-                 <a href="" class="nav-item nav-link " style="color:blue" data-toggle="modal" data-target="#searchModal">
-                <input class="mt-1" type="image" src="./image/plus.png"  width="18" height="20">
+                   <a href="" class="nav-item nav-link " style="color:blue" data-toggle="modal" data-target="#searchModal">
+                  <input class="mt-1" type="image" src="./image/search2.png"  width="18" height="20">
                   ค้นหาแบบละเอียด
                   </a>  
                 <!--จบ Code เริ่มปุ่มเรียกการทำงาน Modal ค้นหา -->
@@ -202,7 +202,7 @@ elseif(isset($_POST['2025']))
               <!--จบการทำงาน Modal เพิ่มข้อมูล -->
 
               <!--เริ่มการทำงาน Search Modal-->
-              <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog " role="document">
                         <div class="modal-content">
                         <div class="modal-header">

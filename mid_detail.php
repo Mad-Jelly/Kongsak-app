@@ -8,7 +8,7 @@ $service_no=$_GET['service_no'];
 include("connect_table.php");
 $result=mysqli_query($con,"SELECT * FROM view_mid_full_service WHERE service_no='".$service_no."'");
 $process=mysqli_query($con,"SELECT pc.process_id,pc.service_no,pc.process_detail,tech.tech_name,pc.repair_no,pc.repair_date 
- FROM tbl_mid_process pc,tbl_mid_technician tech where pc.tech_id=tech.tech_id AND service_no='".$service_no."'");
+ FROM tbl_mid_process pc,tbl_mid_technician tech where pc.tech_id=tech.tech_id AND service_no='".$service_no."' ORDER BY open_date");
 $chk_img_no=mysqli_query($con,"SELECT image_no FROM tbl_mid_service_image WHERE service_no='".$service_no."'"); 
 if($authen==NULL)
 {		
