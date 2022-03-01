@@ -12,26 +12,39 @@ if($_SESSION["year"]==2020)
   $result=mysqli_query($con,"SELECT * FROM view_mid_order_full_process  WHERE end_date IS NOT NULL   ORDER BY open_date");
   $header='รายละเอียดการดำเนินการปี 2563';
 }
-else
+elseif($_SESSION["year"]==2021)
 {
-  $result=mysqli_query($con,"SELECT * FROM view_mid_order_full_process  WHERE end_date IS NULL OR open_date like'%2021%'  ORDER BY open_date");
+  $result=mysqli_query($con,"SELECT * FROM view_mid_order_full_process  WHERE end_date IS NULL AND open_date like'%2021%'  ORDER BY open_date");
   $header='รายละเอียดการดำเนินการปี 2564';
   $_SESSION["year"]=2021;
 }
+elseif($_SESSION["year"]==2022)
+{
+  $result=mysqli_query($con,"SELECT * FROM view_mid_order_full_process  WHERE end_date IS NULL AND open_date like'%2022%'  ORDER BY open_date");
+  $header='รายละเอียดการดำเนินการปี 2565';
+  $_SESSION["year"]=2022;
+}
+
 
 
 if(isset($_POST['2020']))
 {	
-  $result=mysqli_query($con,"SELECT * FROM view_mid_order_full_process  WHERE end_date IS NOT NULL   ORDER BY open_date");
+  $result=mysqli_query($con,"SELECT * FROM view_mid_order_full_process  WHERE end_date IS NULL AND open_date like'%2020%'  ORDER BY open_date");
   $header='รายละเอียดการดำเนินการปี 2563';
   $_SESSION["year"]=2020;
 
 }
 elseif(isset($_POST['2021']))
 {	
-  $result=mysqli_query($con,"SELECT * FROM view_mid_order_full_process  WHERE end_date IS NULL OR open_date like'%2021%'  ORDER BY open_date");
+  $result=mysqli_query($con,"SELECT * FROM view_mid_order_full_process  WHERE end_date IS NULL AND open_date like'%2021%'  ORDER BY open_date");
   $header='รายละเอียดการดำเนินการปี 2564';
   $_SESSION["year"]=2021;
+}
+elseif(isset($_POST['2022']))
+{	
+  $result=mysqli_query($con,"SELECT * FROM view_mid_order_full_process  WHERE end_date IS NULL AND open_date like'%2022%'  ORDER BY open_date");
+  $header='รายละเอียดการดำเนินการปี 2565';
+  $_SESSION["year"]=2022;
 }
 
 ?>
@@ -105,7 +118,9 @@ elseif(isset($_POST['2021']))
                   <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" style="color:blue;" role="button" aria-haspopup="true" aria-expanded="false">แสดงผลตามปี</a>
                     <div class="dropdown-menu">
                       <input type="submit" class="dropdown-item"  name="2020"  value=" ปี2563"   />    
-                      <input type="submit" class="dropdown-item"   name="2021"  value=" ปี2564"  />                      
+                      <input type="submit" class="dropdown-item"   name="2021"  value=" ปี2564"  />  
+                      <input type="submit" class="dropdown-item"  name="2022"  value=" ปี2565"   />    
+                                        
                     </div>
                 </li>
               </ul>

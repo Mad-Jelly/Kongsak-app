@@ -33,8 +33,7 @@ if($authen==NULL)
 {
  	var url = "./mid_edit_detail.php?service_no=<?=$service_no?>";
 	myRef = window.open(url ,'mywin','left=20,top=20,width=1400,height=540,toolbar=1,resizable=0');
-	myRef.focus()
-    
+	myRef.focus()   
 }
 </script>
 
