@@ -87,8 +87,8 @@ while($all_dt = mysqli_fetch_array($all_de))
     <div class="row  pt-5 pl-2 pb-2 bg ">
         <img src="./image/mid.png"  /> 
     </div>             
-    <div class="row pt-3 pb-2 h4"  style="background-color: #e3f2fd;">  
-    <div class="col-lg">
+    <div class="row pt-3 pb-2 "  style="background-color: #e3f2fd;">  
+    <div class="col-lg h4">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="#"></a>
             <button class="navbar-toggler mr-auto" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
